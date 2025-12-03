@@ -24,7 +24,7 @@ function About({
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { t } = useTranslation();
   const toggleModal = () => setIsModalOpen((prev) => !prev);
-  const [isMuted, setIsMuted] = useState<boolean>(false);
+  const [, setIsMuted] = useState<boolean>(false);
 
   const backHorizontalChangeHandler = () => {
     setIsPositionChanged(false);
