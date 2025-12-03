@@ -21,6 +21,7 @@ function SectionThree() {
 
     if (cloudElement) {
       // cloudElement.style.transform = `scale(${clampedScaleFactor})`;
+      // cloudElement.style.transform = `scale(${clampedScaleFactor})`;
     }
   });
 
