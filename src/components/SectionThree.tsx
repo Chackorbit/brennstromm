@@ -1,18 +1,18 @@
-import { useScroll } from "@react-three/drei";
+// import { useScroll } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
 
 function SectionThree() {
-  const scroll = useScroll();
+  // const scroll = useScroll();
   const { t } = useTranslation();
 
   useFrame(() => {
     // Calculate the scale factor based on scroll position, starting from 0
-    const scaleFactor = scroll.offset * 8; // Adjust the factor as needed
+    // const scaleFactor = scroll.offset * 8; // Adjust the factor as needed
 
     // Ensure the scale factor is at least 1
-    const clampedScaleFactor = Math.max(1, scaleFactor);
+    // const clampedScaleFactor = Math.max(1, scaleFactor);
 
     // Update the element's scale using CSS transform
     const cloudElement = document.querySelector(

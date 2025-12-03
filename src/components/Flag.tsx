@@ -36,17 +36,23 @@ const Flag = (props: any) => {
     actions["Joints|Take 001|BaseLayer"]?.play();
   }, [actions]);
 
-  const position = useMemo(
+  const position = useMemo<[number, number, number]>(
     () => (window.innerWidth < 600 ? [0.58, -0.5, 2.1] : [1.58, 0, 2.1]),
     []
   );
   const scale = useMemo(() => 0.1, []);
 
-  const rotationFlagRig = useMemo(() => [Math.PI / 2, 0, 0], []);
+  // const rotationFlagRig = useMemo<[number, number, number]>(() => [Math.PI / 2, 0, 0], []);
   const scaleFlagRig = useMemo(() => 0.546, []);
 
-  const jointsPosition = useMemo(() => [-2.842, 0.038, -5.84], []);
-  const jointsRotation = useMemo(() => [0.031, -0.496, 0.035], []);
+  const jointsPosition = useMemo<[number, number, number]>(
+    () => [-2.842, 0.038, -5.84],
+    []
+  );
+  const jointsRotation = useMemo<[number, number, number]>(
+    () => [0.031, -0.496, 0.035],
+    []
+  );
 
   return (
     <group
@@ -58,7 +64,11 @@ const Flag = (props: any) => {
       {...props}
     >
       <group name="Scene">
-        <group name="FlagRig" rotation={rotationFlagRig} scale={scaleFlagRig}>
+        <group
+          name="FlagRig"
+          rotation={[Math.PI / 2, 0, 0]}
+          scale={scaleFlagRig}
+        >
           <group
             name="Joints"
             position={jointsPosition}
