@@ -1,0 +1,137 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* @font-face {
+  font-family: "din2014";
+  src: url("/fonts/din-regular.ttf");
+  font-weight: normal;
+}
+@font-face {
+  font-family: "din2014";
+  src: url("/fonts/din-bold.ttf");
+  font-weight: bold;
+} */
+
+* {
+  font-family: "Roboto", sans-serif;
+}
+
+@layer utilities {
+  .bg-custom {
+    background-size: 200% 120%;
+    background-position: 0% 0%;
+  }
+  .scrolldown {
+    /* position: fixed; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    transform: translateX(-50%);
+    left: 50%;
+    bottom: 5%;
+    z-index: 30;
+    height: 50px;
+    width: 50px;
+    border-radius: 999px;
+    border: 2px solid black;
+    background-color: rgba(255, 255, 255, 0.4);
+  }
+
+  .scrolldown svg {
+    animation: updown 1s ease-in-out infinite forwards alternate;
+  }
+}
+
+@keyframes updown {
+  50% {
+    transform: translateY(-5px);
+  }
+  100% {
+    transform: translateY(5px);
+  }
+}
+
+.logo-1 {
+  height: 200px;
+  width: 300px;
+  object-fit: contain;
+}
+@media screen and (max-width: 600px) {
+  .logo-1 {
+    width: 100%;
+    height: 120px;
+  }
+}
+.logo-2 {
+  width: 360px;
+  height: 180px;
+  object-fit: contain;
+}
+@media screen and (max-width: 600px) {
+  .logo-2 {
+    width: 100%;
+    height: 120px;
+  }
+}
+.logo-6 {
+  width: 230px;
+  height: 180px;
+  object-fit: contain;
+}
+@media screen and (max-width: 600px) {
+  .logo-6 {
+    width: 100%;
+    height: 120px;
+  }
+}
+.logo-3 {
+  width: 50%;
+  height: 180px;
+  object-fit: contain;
+}
+@media screen and (max-width: 600px) {
+  .logo-3 {
+    width: 100%;
+    grid-column: 0.3333333333;
+    order: 4;
+    height: 120px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .sp-logo {
+    filter: contrast(200%);
+  }
+}
+
+.section-2_grid {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  max-width: 1290px;
+  column-gap: 40px;
+}
+
+.moving-mouse-holder .mouse {
+  width: 28px;
+  height: 45px;
+  position: relative;
+  right: 0;
+  border-radius: 18px;
+}
+
+.moving-mouse-holder .mouse-button {
+  font-size: 16px;
+  animation: mouse-scroll 1s infinite alternate;
+}
+
+@keyframes mouse-scroll {
+  0% {
+    transform: translateY(0) scaleY(1);
+  }
+  100% {
+    transform: translateY(12px) scaleY(0.9);
+  }
+}
