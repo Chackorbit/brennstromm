@@ -239,7 +239,7 @@ function About({
                   }, 500);
                 }}
               >
-                <img src="/public/assets/kiva.png" alt="kiva" />
+                <img src="/assets/kiva.png" alt="kiva" />
               </button>
 
               <button
@@ -251,7 +251,7 @@ function About({
                   }, 500);
                 }}
               >
-                <img src="/public/assets/yellow-heart.png" alt="yellow heart" />
+                <img src="/assets/yellow-heart.png" alt="yellow heart" />
               </button>
             </div>
           </div>
