@@ -46,28 +46,58 @@ function ToolBar({
   const { play, stop } = useAudio("/assets/audio.mp3");
   const [isMuted, setIsMuted] = useState<boolean>(false);
 
+  // const HorizontalChangeHandler = () => {
+  //   const Hill = three.scene.getObjectByName("hill");
+  //   const Flag = three.scene.getObjectByName("flag");
+
+  //   if (Hill && Flag) {
+  //     gsap.to(Hill.position, {
+  //       z: Hill.position.z + 1.5,
+  //       x: Hill.position.x - 0.5,
+  //       y:
+  //         window.innerWidth > 600
+  //           ? Hill.position.y - 0.5
+  //           : Hill.position.y - 0.15,
+  //       duration: 1,
+  //     });
+  //     gsap.to(Flag.position, {
+  //       z: Flag.position.z + 1.5,
+  //       x: Flag.position.x - 0.5,
+  //       y:
+  //         window.innerWidth > 600
+  //           ? Flag.position.y - 0.5
+  //           : Flag.position.y - 0.15,
+  //       duration: 1,
+  //     });
+
+  //     setIsPositionChanged(true);
+  //     setIsScrollDisabled(true);
+  //   }
+  // };
+
   const HorizontalChangeHandler = () => {
     const Hill = three.scene.getObjectByName("hill");
     const Flag = three.scene.getObjectByName("flag");
 
     if (Hill && Flag) {
+      gsap.killTweensOf([Hill.position, Flag.position]); // ✅ Очищуємо попередні анімації
+
+      const yOffset = window.innerWidth > 600 ? -0.5 : -0.15;
+
       gsap.to(Hill.position, {
-        z: Hill.position.z + 1.5,
-        x: Hill.position.x - 0.5,
-        y:
-          window.innerWidth > 600
-            ? Hill.position.y - 0.5
-            : Hill.position.y - 0.15,
+        z: "+=1.5", // ✅ РЕЛЯТИВНО +1.5
+        x: "-=0.5", // ✅ РЕЛЯТИВНО -0.5
+        y: `+=${yOffset}`, // ✅ РЕЛЯТИВНО -0.5/-0.15
         duration: 1,
+        ease: "power2.inOut",
       });
+
       gsap.to(Flag.position, {
-        z: Flag.position.z + 1.5,
-        x: Flag.position.x - 0.5,
-        y:
-          window.innerWidth > 600
-            ? Flag.position.y - 0.5
-            : Flag.position.y - 0.15,
+        z: "+=1.5", // ✅ Точно така ж відстань
+        x: "-=0.5", // ✅ Точно така ж відстань
+        y: `+=${yOffset}`, // ✅ Точно така ж відстань
         duration: 1,
+        ease: "power2.inOut",
       });
 
       setIsPositionChanged(true);

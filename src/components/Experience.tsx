@@ -69,7 +69,7 @@ function Experience() {
           >
             <Environment files="/models/env-2_11zon.jpg" />
             <ModelGroup />
-            {window.innerWidth > 600 && <Particales />}
+            {window.innerWidth > 0 && <Particales />}
             <ScrollTexts
               setIsScrollDisabled={setIsScrollDisabled}
               isScrollDisabled={isScrollDisabled}

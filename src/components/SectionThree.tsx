@@ -1,28 +1,33 @@
-// import { useScroll } from "@react-three/drei";
-import { useFrame } from "@react-three/fiber";
+import { useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
+import { useFrame } from "@react-three/fiber";
 
 function SectionThree() {
-  // const scroll = useScroll();
   const { t } = useTranslation();
+  const isDesktop = useRef(false);
+
+  useEffect(() => {
+    const checkScreenSize = () => {
+      isDesktop.current = window.innerWidth > 600;
+    };
+
+    checkScreenSize();
+    window.addEventListener("resize", checkScreenSize);
+
+    return () => window.removeEventListener("resize", checkScreenSize);
+  }, []);
 
   useFrame(() => {
-    // Calculate the scale factor based on scroll position, starting from 0
-    // const scaleFactor = scroll.offset * 8; // Adjust the factor as needed
-
-    // Ensure the scale factor is at least 1
-    // const clampedScaleFactor = Math.max(1, scaleFactor);
-
-    // Update the element's scale using CSS transform
     const cloudElement = document.querySelector(
       "#cloud"
     ) as HTMLDivElement | null;
-
     if (cloudElement) {
       // cloudElement.style.transform = `scale(${clampedScaleFactor})`;
     }
   });
+
+  const ContentWrapper = isDesktop.current ? motion.div : "div";
 
   return (
     <section className="h-screen w-screen px-8 md:px-14 max-w-screen-2xl mx-auto flex justify-center flex-col">
@@ -37,7 +42,7 @@ function SectionThree() {
           id="cloud"
         />
 
-        <motion.div
+        <ContentWrapper
           initial={{ x: -200, opacity: 0 }}
           whileInView={{ opacity: 1, x: 0, transition: { duration: 1.4 } }}
         >
@@ -137,31 +142,7 @@ function SectionThree() {
               />
             </div>
           </div>
-
-          {/* <div className=" mt-6">
-            <div className=" flex justify-center items-center">
-              <img loading="lazy"
-                width={600}
-                height={180}
-                className=""
-                src="/logos/3.png"
-                alt="customer"
-              />
-            </div>
-          </div> */}
-
-          {/* <div className="section-2_grid">
-            <img loading="lazy" className="logo-2" src="/logos/2.png" alt="customer" />
-            <img loading="lazy" className="logo-1" src="/logos/1.png" alt="customer" />
-            <img loading="lazy" className="logo-1" src="/logos/5.png" alt="customer" />
-
-            <img loading="lazy" className="logo-6" src="/logos/9.png" alt="customer" />
-            <img loading="lazy" className="logo-6" src="/logos/7.png" alt="customer" />
-            <img loading="lazy" className="logo-6" src="/logos/8.png" alt="customer" />
-            <img loading="lazy" className="logo-6" src="/logos/6.png" alt="customer" />
-            <img loading="lazy" className="logo-3 sp-logo" src="/logos/3.png" alt="customer" />
-          </div> */}
-        </motion.div>
+        </ContentWrapper>
       </div>
     </section>
   );

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Section } from "./ScrollTexts";
 import { motion } from "framer-motion";
 import { Modal } from "antd";
@@ -11,25 +11,38 @@ function SectionTwo() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { t } = useTranslation();
   const scroll = useScroll();
+  const isDesktop = useRef(false);
 
   const toggleModal = () => setIsModalOpen((prev) => !prev);
 
-  useFrame(() => {
-    // Calculate the scale factor based on scroll position, starting from 0
-    const scaleFactor = scroll.offset * 20; // Adjust the factor as needed
+  useEffect(() => {
+    const checkScreenSize = () => {
+      isDesktop.current = window.innerWidth > 600;
+    };
 
-    // Ensure the scale factor is at least 1
+    checkScreenSize();
+    window.addEventListener("resize", checkScreenSize);
+
+    return () => window.removeEventListener("resize", checkScreenSize);
+  }, []);
+
+  useFrame(() => {
+    const scaleFactor = scroll.offset * 20;
     const clampedScaleFactor = Math.max(1, scaleFactor);
 
-    // Update the element's scale using CSS transform
     const cloudElement = document.querySelector(
       "#cloud-section-two"
     ) as HTMLDivElement | null;
-
     if (cloudElement) {
       cloudElement.style.transform = `scale(${clampedScaleFactor})`;
     }
   });
+
+  // ✅ На мобільних - звичайні div (видимі одразу)
+  // ✅ На desktop - motion з анімацією
+  const TextAnimation = isDesktop.current ? motion.h2 : "h2";
+  const TextAnimationP = isDesktop.current ? motion.p : "p";
+  const ButtonWrapper = isDesktop.current ? motion.div : "div";
 
   return (
     <Section>
@@ -44,14 +57,16 @@ function SectionTwo() {
           id="cloud-section-two"
         />
 
-        <motion.h2
+        {/* ✅ Desktop: анімація | Мобільний: видно одразу */}
+        <TextAnimation
           initial={{ y: 50, opacity: 0 }}
           whileInView={{ opacity: 1, y: 0, transition: { duration: 1.4 } }}
           className="text-5xl font-bold mb-4"
         >
           {t("SectionTwoTitle")}
-        </motion.h2>
-        <motion.p
+        </TextAnimation>
+
+        <TextAnimationP
           initial={{ y: 50, opacity: 0 }}
           whileInView={{
             opacity: 1,
@@ -62,7 +77,7 @@ function SectionTwo() {
           dangerouslySetInnerHTML={{ __html: t("SectionTwoText") }}
         />
 
-        <motion.p
+        <TextAnimationP
           className="text-2xl mt-6"
           initial={{ y: 50, opacity: 0 }}
           whileInView={{
@@ -72,9 +87,10 @@ function SectionTwo() {
           }}
         >
           {t("SectionTwoText2")}
-        </motion.p>
+        </TextAnimationP>
       </div>
-      <motion.div
+
+      <ButtonWrapper
         initial={{ y: 50, opacity: 0 }}
         whileInView={{
           opacity: 1,
@@ -88,7 +104,7 @@ function SectionTwo() {
         >
           {t("SectionTwoButton")}
         </button>
-      </motion.div>
+      </ButtonWrapper>
 
       <Modal
         title={<h4 className="text-3xl mb-5">{t("ModalTitle")}</h4>}

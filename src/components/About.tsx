@@ -40,35 +40,30 @@ function About({
     stop();
     changeMuted(false);
 
-    var bg = document.querySelector("#bg");
-    var video: any = document.querySelector("#animationVideo");
+    const bg = document.querySelector<HTMLElement>("#bg");
+
     setAnimating(true);
+    setIsScrollDisabled(true);
 
     setTimeout(() => {
-      gsap.to(bg, {
-        webkitFilter: "brightness(3)",
-        duration: 1.5,
-        ease: Power1.easeIn,
-      });
-      gsap.to(bg, {
-        webkitFilter: "brightness(3)",
-        duration: 1.5,
-        ease: Power1.easeIn,
-        onComplete: () => {
-          video.play();
-          video.onended = function () {
-            // setAnimating(false);
-
+      if (bg) {
+        gsap.to(bg, {
+          webkitFilter: "brightness(3)",
+          filter: "brightness(3)",
+          duration: 1.5,
+          ease: Power1.easeIn,
+          onComplete: () => {
             window.location.href = link;
-          };
-        },
-      });
+          },
+        });
+      } else {
+        window.location.href = link;
+      }
+
       setTimeout(() => {
         setShowPortfolio(true);
       }, 1000);
     }, 500);
-
-    setIsScrollDisabled(true);
   };
 
   const changeMuted = (value: boolean) => {

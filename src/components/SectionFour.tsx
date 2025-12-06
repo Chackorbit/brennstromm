@@ -3,27 +3,39 @@ import { useScroll } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
+import { useRef, useEffect } from "react";
 
 function SectionFour() {
   const scroll = useScroll();
   const { t } = useTranslation();
+  const isDesktop = useRef(false);
+
+  useEffect(() => {
+    const checkScreenSize = () => {
+      isDesktop.current = window.innerWidth > 600;
+    };
+
+    checkScreenSize();
+    window.addEventListener("resize", checkScreenSize);
+
+    return () => window.removeEventListener("resize", checkScreenSize);
+  }, []);
 
   useFrame(() => {
-    // Calculate the scale factor based on scroll position, starting from 0
-    const scaleFactor = scroll.offset * 16; // Adjust the factor as needed
-
-    // Ensure the scale factor is at least 1
+    const scaleFactor = scroll.offset * 16;
     const clampedScaleFactor = Math.max(1, scaleFactor);
 
-    // Update the element's scale using CSS transform
     const cloudElement = document.querySelector(
       "#cloud2"
     ) as HTMLDivElement | null;
-
     if (cloudElement) {
       cloudElement.style.transform = `scale(${clampedScaleFactor})`;
     }
   });
+
+  const MotionH3 = isDesktop.current ? motion.h3 : "h3";
+  const MotionH4 = isDesktop.current ? motion.h4 : "h4";
+  const MotionP = isDesktop.current ? motion.p : "p";
 
   return (
     <Section>
@@ -41,7 +53,7 @@ function SectionFour() {
 
       <div>
         <div className="mb-6">
-          <motion.h3
+          <MotionH3
             initial={{ y: 70, opacity: 0 }}
             whileInView={{
               opacity: 1,
@@ -51,9 +63,9 @@ function SectionFour() {
             className="text-3xl md:text-5xl font-bold mb-10"
           >
             {t("SectionFourTitle")}
-          </motion.h3>
+          </MotionH3>
 
-          <motion.h4
+          <MotionH4
             initial={{ y: 70, opacity: 0 }}
             whileInView={{
               opacity: 1,
@@ -63,8 +75,9 @@ function SectionFour() {
             className="text-xl md:text-3xl font-bold mb-4"
           >
             {t("SectionFourTitle3")}
-          </motion.h4>
-          <motion.p
+          </MotionH4>
+
+          <MotionP
             initial={{ y: 70, opacity: 0 }}
             whileInView={{
               opacity: 1,
@@ -74,8 +87,9 @@ function SectionFour() {
             className="text-xl my-5"
           >
             {t("SectionFourText")}
-          </motion.p>
-          <motion.p
+          </MotionP>
+
+          <MotionP
             initial={{ y: 70, opacity: 0 }}
             whileInView={{
               opacity: 1,
@@ -85,10 +99,10 @@ function SectionFour() {
             className="text-xl"
           >
             {t("SectionFourText2")}
-          </motion.p>
+          </MotionP>
 
           <div className="mt-10">
-            <motion.h4
+            <MotionH4
               initial={{ y: 70, opacity: 0 }}
               whileInView={{
                 opacity: 1,
@@ -98,8 +112,9 @@ function SectionFour() {
               className="text-xl md:text-3xl font-bold"
             >
               {t("SectionFourTitle4")}
-            </motion.h4>
-            <motion.p
+            </MotionH4>
+
+            <MotionP
               initial={{ y: 70, opacity: 0 }}
               whileInView={{
                 opacity: 1,
@@ -109,47 +124,9 @@ function SectionFour() {
               className="text-xl mt-5"
             >
               {t("SectionFourText4")}
-            </motion.p>
+            </MotionP>
           </div>
         </div>
-        {/* <div className="mb-3">
-          <motion.h3
-            initial={{ y: 50, opacity: 0 }}
-            whileInView={{
-              opacity: 1,
-              y: 0,
-              transition: { duration: 1, delay: 0.7 },
-            }}
-            className="text-3xl md:text-5xl font-bold mb-4"
-          >
-            {t("SectionFourTitle2")}
-          </motion.h3>
-          <motion.p
-            initial={{ y: 50, opacity: 0 }}
-            whileInView={{
-              opacity: 1,
-              y: 0,
-              transition: { duration: 1, delay: 1 },
-            }}
-            className="text-xl"
-          >
-            {t("SectionFourText2")}
-          </motion.p>
-        </div> */}
-
-        {/* <div>
-          <motion.p
-            initial={{ y: 50, opacity: 0 }}
-            whileInView={{
-              opacity: 1,
-              y: 0,
-              transition: { duration: 1, delay: 1.1 },
-            }}
-            className="font-semibold text-xl"
-          >
-            {t("SectionFourText3")}
-          </motion.p>
-        </div> */}
       </div>
     </Section>
   );

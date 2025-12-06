@@ -13,7 +13,7 @@ function SectionOne() {
             className="logo"
             src="/assets/customer-logo.webp"
             alt="Customer company logo"
-            width="120"
+            width="320"
             height="32"
           />
         </div>

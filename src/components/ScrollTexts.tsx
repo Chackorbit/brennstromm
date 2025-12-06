@@ -6,6 +6,7 @@ import {
   useMemo,
   lazy,
   Suspense,
+  useRef,
 } from "react";
 import { Scroll } from "@react-three/drei";
 import { motion } from "framer-motion";
@@ -66,76 +67,75 @@ function ScrollTexts({
   setAnimating,
 }: Props) {
   const three = useThree();
+  const isDesktop = useRef(false);
 
   useEffect(() => {
-    if (!triggerMoving) return;
-
-    let animationFrameId: number;
-
-    const animate = () => {
-      const Hill = three.scene.getObjectByName("hill");
-      const Flag = three.scene.getObjectByName("flag");
-      if (Hill && Flag) {
-        gsap.to(Hill.position, {
-          z: Hill.position.z - 1.5,
-          x: Hill.position.x + 0.5,
-          y:
-            window.innerWidth > 600
-              ? Hill.position.y + 0.5
-              : Hill.position.y + 0.15,
-          duration: 1,
-        });
-        gsap.to(Flag.position, {
-          z: Flag.position.z - 1.5,
-          x: Flag.position.x + 0.5,
-          y:
-            window.innerWidth > 600
-              ? Flag.position.y + 0.5
-              : Flag.position.y + 0.15,
-          duration: 1,
-        });
-      }
-      animationFrameId = requestAnimationFrame(animate);
+    const checkScreenSize = () => {
+      isDesktop.current = window.innerWidth > 600;
     };
 
-    animate();
+    checkScreenSize();
+    window.addEventListener("resize", checkScreenSize);
 
-    return () => cancelAnimationFrame(animationFrameId);
+    return () => window.removeEventListener("resize", checkScreenSize);
+  }, []);
+
+  useEffect(() => {
+    if (!triggerMoving || !isDesktop.current) return;
+
+    const Hill = three.scene.getObjectByName("hill");
+    const Flag = three.scene.getObjectByName("flag");
+
+    if (Hill && Flag) {
+      gsap.killTweensOf([Hill.position, Flag.position]);
+
+      const yOffset = window.innerWidth > 600 ? 0.5 : 0.15;
+
+      gsap.to(Hill.position, {
+        z: "-=1.5",
+        x: "+=0.5",
+        y: `+=${yOffset}`,
+        duration: 1,
+        ease: "power2.inOut",
+      });
+
+      gsap.to(Flag.position, {
+        z: "-=1.5",
+        x: "+=0.5",
+        y: `+=${yOffset}`,
+        duration: 1,
+        ease: "power2.inOut",
+      });
+    }
   }, [triggerMoving, three.scene]);
 
   useEffect(() => {
-    if (!backFromGaming) return;
+    if (!backFromGaming || !isDesktop.current) return;
 
-    let animationFrameId: number;
+    const Hill = three.scene.getObjectByName("hill");
+    const Flag = three.scene.getObjectByName("flag");
 
-    const animateBack = () => {
-      const Hill = three.scene.getObjectByName("hill");
-      const Flag = three.scene.getObjectByName("flag");
+    if (Hill && Flag) {
+      gsap.killTweensOf([Hill.position, Flag.position]);
 
-      if (Hill && Flag) {
-        const HillY = window.innerWidth < 600 ? -4.2 : -3.6;
-        const HillZ = 6.8;
+      const yOffset = window.innerWidth > 600 ? 0.5 : 0.15;
 
-        const FlagY = window.innerWidth < 600 ? -0.5 : 0;
-        const FlagZ = 2.1;
+      gsap.to(Hill.position, {
+        z: "+=1.5",
+        x: "-=0.5",
+        y: `+=${yOffset}`,
+        duration: 1,
+        ease: "power2.inOut",
+      });
 
-        gsap.to(Hill.position, {
-          y: HillY,
-          z: HillZ,
-          duration: 1,
-        });
-        gsap.to(Flag.position, {
-          y: FlagY,
-          z: FlagZ,
-          duration: 1,
-        });
-      }
-      animationFrameId = requestAnimationFrame(animateBack);
-    };
-
-    animateBack();
-
-    return () => cancelAnimationFrame(animationFrameId);
+      gsap.to(Flag.position, {
+        z: "+=1.5",
+        x: "-=0.5",
+        y: `+=${yOffset}`,
+        duration: 1,
+        ease: "power2.inOut",
+      });
+    }
   }, [backFromGaming, three.scene]);
 
   const memoCloudVariants = useMemo(() => cloudVariants, []);

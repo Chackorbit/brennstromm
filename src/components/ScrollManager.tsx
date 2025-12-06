@@ -13,6 +13,18 @@ function ScrollManager({ section, onSectionChange }: Props) {
   const lastScroll = useRef(0);
   const isAnimating = useRef(false);
   const fillRef = useRef<HTMLElement | null>(null);
+  const isDesktop = useRef(false);
+
+  useEffect(() => {
+    const checkScreenSize = () => {
+      isDesktop.current = window.innerWidth > 600;
+    };
+
+    checkScreenSize();
+    window.addEventListener("resize", checkScreenSize);
+
+    return () => window.removeEventListener("resize", checkScreenSize);
+  }, []);
 
   useEffect(() => {
     if (data.fill && fillRef.current !== data.fill) {
@@ -22,6 +34,8 @@ function ScrollManager({ section, onSectionChange }: Props) {
   }, [data.fill]);
 
   useEffect(() => {
+    if (!isDesktop.current || !data.el) return;
+
     gsap.to(data.el, {
       duration: 1,
       scrollTop: section * data.el.clientHeight,
@@ -35,7 +49,8 @@ function ScrollManager({ section, onSectionChange }: Props) {
   }, [section, data.el]);
 
   useFrame(() => {
-    // Safely read a numeric scroll value from the possibly-typed-away property
+    if (!isDesktop.current) return;
+
     const scrollCurrent =
       typeof (data as any).scroll?.current === "number"
         ? (data as any).scroll.current
