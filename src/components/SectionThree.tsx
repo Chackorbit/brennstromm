@@ -30,18 +30,17 @@ function SectionThree() {
   const ContentWrapper = isDesktop.current ? motion.div : "div";
 
   return (
-    <section className="h-screen w-screen px-8 md:px-14 max-w-screen-2xl mx-auto flex justify-center flex-col">
+    <section className="relative h-screen w-screen px-8 md:px-14 max-w-screen-2xl mx-auto flex justify-center flex-col">
+      <img
+        loading="lazy"
+        height={1100}
+        width={500}
+        className="absolute h-[100%] top-[5%] left-0 bottom-1/2 -z-10 w-full object-cover"
+        src="/assets/cloud.webp"
+        alt="cloud"
+        id="cloud"
+      />
       <div className="relative">
-        <img
-          loading="lazy"
-          height={500}
-          width={500}
-          className="absolute left-0 bottom-1/2 -z-10"
-          src="/assets/cloud.webp"
-          alt="cloud"
-          id="cloud"
-        />
-
         <ContentWrapper
           initial={{ x: -200, opacity: 0 }}
           whileInView={{ opacity: 1, x: 0, transition: { duration: 1.4 } }}
