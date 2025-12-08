@@ -35,7 +35,7 @@ function SectionThree() {
         loading="lazy"
         height={1100}
         width={500}
-        className="absolute h-[100%] top-[5%] left-0 bottom-1/2 -z-10 w-full object-cover"
+        className="absolute h-[100%] top-[8%] left-0 bottom-1/2 -z-10 w-full object-cover"
         src="/assets/cloud.webp"
         alt="cloud"
         id="cloud"
