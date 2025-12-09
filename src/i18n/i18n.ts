@@ -65,6 +65,12 @@ i18n.use(initReactI18next).init({
         SectionSixText4: `Whether you need a complete rebrand or targeted campaign management, we deliver measurable results through marketing based on the current best practice.`,
         SectionSixButton: "Contact Now",
         SectionSixBackButton: "Back",
+        cookie_title: "Cookies & analytics",
+        cookie_description:
+          "We use cookies to collect anonymous analytics data and improve your experience. You can accept or decline analytics cookies.",
+        cookie_accept: "Accept analytics",
+        cookie_decline: "Decline",
+        cookie_manage: "Cookie settings",
       },
     },
     no: {
@@ -128,6 +134,12 @@ i18n.use(initReactI18next).init({
         SectionSixText4: `Du driver bedriften din, vi håndterer markedsføringen og sikrer deg ønsket kundeflow. Enklere blir det ikke.`,
         SectionSixButton: "Ta Kontakt",
         SectionSixBackButton: "Tilbake",
+        cookie_title: "Informasjonskapsler og analyse",
+        cookie_description:
+          "Vi bruker informasjonskapsler for å samle anonym statistikk og forbedre opplevelsen. Du kan godta eller avslå analyse-informasjonskapsler.",
+        cookie_accept: "Godta analyse",
+        cookie_decline: "Avslå",
+        cookie_manage: "Informasjonskapselinnstillinger",
       },
     },
   },
